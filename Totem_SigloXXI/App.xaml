@@ -2,10 +2,17 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
+             xmlns:infra="clr-namespace:Totem_SigloXXI.Infrastructure"
              mc:Ignorable="d"
              x:Class="Totem_SigloXXI.App">
     <Application.Resources>
-
+        <ResourceDictionary>
+            <!--LOCATOR-->
+            <!--ejemplo para entender: locator quien eres? soy un objeto que esta dentro del instancelocator, instancelocator esta dentro de infra, infra es una clase que
+            esta dentro de infraestructure, infraestructure encuentra el objeto main, esto se hace para poder conectar las viewmodels con las views -->
+            <infra:InstanceLocator x:Key="Locator"/>
+            
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
