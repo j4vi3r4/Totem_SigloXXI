@@ -2,6 +2,7 @@
 namespace Totem_SigloXXI.Services
 {
     using Newtonsoft.Json;
+    using Plugin.Connectivity;
     using System;
     using System.Collections.Generic;
     using System.Net.Http;
@@ -13,6 +14,35 @@ namespace Totem_SigloXXI.Services
     public class ApiService
     {
         // los metodos async depende de la data que esta al otro lado
+
+        //Tarea para validar conexión a internet 
+
+        public async Task<Response> CheckConnection()
+        {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = "Enciende tu Internet",
+                };
+            }
+            var isReachable = await CrossConnectivity.Current.IsRemoteReachable("google.com");
+            if (!isReachable)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = "No Hay Conexión a Internet",
+                };
+            }
+            return new Response
+            {
+                IsSuccess = true,
+            };
+        
+        }
+
 
         public async Task<Response> GetList<T>(string urlBase, string prefix, string controller) //metodo que trae lista generica, en el llamado se nombra la lista
         {

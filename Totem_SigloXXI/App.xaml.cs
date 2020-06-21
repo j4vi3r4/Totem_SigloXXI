@@ -11,7 +11,7 @@ namespace Totem_SigloXXI
         {
             InitializeComponent();
 
-            MainPage = new SeleccionMesaDiseno();
+            MainPage = new NavigationPage(new SeleccionMesaDiseno());
         }
 
         protected override void OnStart()

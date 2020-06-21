@@ -5,13 +5,49 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Totem_SigloXXI.SeleccionMesaDiseno"
-             BindingContext="{Binding Main, Source={StaticResource Locator}}">
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="Mesa">
     <ContentPage.Content>
         <StackLayout
-            BindingContext="{Binding Mesas}">
+            BindingContext="{Binding Mesas}" Padding="5">
             <ListView
-                ItemsSource="{Binding Mesas}">
-                
+                HasUnevenRows="True"                
+                IsRefreshing="{Binding IsRefreshing}"
+                IsPullToRefreshEnabled="True"
+                ItemsSource="{Binding Mesas}"
+                RefreshCommand="{Binding RefreshCommand}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Label Text="Disponibiliad" Grid.Column="0" Grid.Row="0"></Label>
+                                <Label FontAttributes="Bold"  Grid.Column="0" Grid.Row="1"
+                                       Text="{Binding Disponibilidad}">                                    
+                                </Label>
+                                <Label Text="Numero Mesa" Grid.Column="1" Grid.Row="1"></Label>                                
+                                <Label
+                                    FontAttributes="Bold" Grid.Column="1" Text="{Binding Numero}">                                    
+                                </Label>
+                                <Label Text="Capacidad" Grid.Column="2" Grid.Row="2"></Label>
+                                <Label 
+                                    FontAttributes="Bold" Grid.Column="2" Text="{Binding Capacidad}">                                    
+                                </Label>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </StackLayout>
     </ContentPage.Content>

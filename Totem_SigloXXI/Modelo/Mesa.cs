@@ -13,6 +13,8 @@ namespace Totem_SigloXXI
         public int Capacidad { get; set; }
         public string Disponibilidad { get; set; }
 
+
+        //
         public override string ToString()
         {
             return this.Disponibilidad;                   

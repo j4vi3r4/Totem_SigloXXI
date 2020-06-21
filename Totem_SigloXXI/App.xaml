@@ -12,7 +12,8 @@
             <!--ejemplo para entender: locator quien eres? soy un objeto que esta dentro del instancelocator, instancelocator esta dentro de infra, infra es una clase que
             esta dentro de infraestructure, infraestructure encuentra el objeto main, esto se hace para poder conectar las viewmodels con las views -->
             <infra:InstanceLocator x:Key="Locator"/>
-            
+            <!--Parametros-->
+            <x:String x:Key="UrlAPI">http://51.143.4.69:4567</x:String>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
