@@ -1,4 +1,5 @@
 ﻿using System;
+using Totem_SigloXXI.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +12,8 @@ namespace Totem_SigloXXI
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new SeleccionMesaDiseno());
+            MainPage = new NavigationPage(new BienvenidosPage());
+
         }
 
         protected override void OnStart()

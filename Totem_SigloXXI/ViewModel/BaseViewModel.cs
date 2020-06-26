@@ -25,5 +25,16 @@ namespace Totem_SigloXXI.ViewModel
             backingField = value;
             this.OnPropertyChanged(propertyName);
         }
+
+        //no sé si ocupe este
+        protected virtual void OnPropertyChangeds([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
     }
 }

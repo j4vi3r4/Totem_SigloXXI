@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Totem_SigloXXI.Views.BienvenidosPage"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="Siglo XXI">
+    <ContentPage.Content>
+        <AbsoluteLayout BackgroundColor="White" BindingContext="{Binding Comensales}">
+            <Grid RowSpacing="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <!--logos-->
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="*"/>
+                    <!--welcome-->
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <BoxView Grid.Row="0" BackgroundColor="White"/>
+                <Image Source="LOGORESTAURATSINFONDO.png"/>
+                <BoxView Grid.Row="1" BackgroundColor="ForestGreen"/>
+                <!--fin header-->
+                <BoxView Grid.Row="2" BackgroundColor="White"/>
+                <Image Source="bienvenidos2.png" Grid.Row="2" Margin="25"/>
+
+                <BoxView Grid.Row="3" BackgroundColor="White"/>
+                <Label Grid.Row="3" Text="Ingrese Número de Personas"
+                   HorizontalOptions="CenterAndExpand" FontSize="23"
+                   VerticalOptions="Center" TextColor="Black"/>
+                <StackLayout Grid.Row="4" HorizontalOptions="Center">
+                    <Frame HasShadow="True" HeightRequest="65" BackgroundColor="White">
+                        <Entry WidthRequest="250" Placeholder="Ingrese Número Aquí" FontAttributes="Italic" HorizontalOptions="Center"
+                           VerticalOptions="Center" Keyboard="Numeric"
+                           HorizontalTextAlignment="Center" Text="{Binding TxtCantComensal}"/>
+                    </Frame>
+                </StackLayout>
+                
+                <!--button -->
+                <BoxView Grid.Row="5" BackgroundColor="White"/>
+                <Button Grid.Row="5" HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand" Text="Solicitar Mesa"
+                    WidthRequest="155" HeightRequest="80" TextColor="Black"
+                     CornerRadius="13" BorderColor="ForestGreen" BorderWidth="9"
+                    BackgroundColor="White" Command="{Binding SolicitarMesaCommand}" IsEnabled="{Binding IsEnabled}"/>
+
+
+                <BoxView Grid.Row="6" BackgroundColor="White" />
+            </Grid>
+            <ActivityIndicator IsRunning="{Binding IsRunning}" VerticalOptions="CenterAndExpand">
+                
+            </ActivityIndicator>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

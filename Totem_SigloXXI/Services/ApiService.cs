@@ -1,5 +1,4 @@
-﻿
-namespace Totem_SigloXXI.Services
+﻿namespace Totem_SigloXXI.Services
 {
     using Newtonsoft.Json;
     using Plugin.Connectivity;
@@ -33,7 +32,7 @@ namespace Totem_SigloXXI.Services
                 return new Response
                 {
                     IsSuccess = false,
-                    Message = "No Hay Conexión a Internet",
+                    Message = "No Hay Conexión Con el Servidor",
                 };
             }
             return new Response
@@ -83,5 +82,46 @@ namespace Totem_SigloXXI.Services
                 };
             }
         }
+       
+
+        public async Task<Response> Post<T>(string urlBase, string prefix, string controller, T model) //METODO BASE PARA ENVIAR DATA
+        {
+            try
+            {
+                var request = JsonConvert.SerializeObject(model);
+                var content = new StringContent(request, Encoding.UTF8, "application/json");
+                var client = new HttpClient();                
+                client.BaseAddress = new Uri(urlBase);                
+                var url = $"{prefix}{controller}";                  
+                var response = await client.PostAsync(url, content); // envia url y el contenido de la data
+                var answer = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode) 
+                {
+                    return new Response
+                    {
+                        IsSuccess = false,
+                        Message = answer,
+                    };
+                }
+                
+                var obj = JsonConvert.DeserializeObject<T>(answer);
+                return new Response
+                {
+                    IsSuccess = true,
+                    Result = obj,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    IsSuccess = false,  
+                    Message = ex.Message,
+                };
+            }
+        } 
+
+
+
     }
 }

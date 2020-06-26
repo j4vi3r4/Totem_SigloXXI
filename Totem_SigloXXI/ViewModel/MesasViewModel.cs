@@ -44,7 +44,7 @@ namespace Totem_SigloXXI.ViewModel
                 return;
             }
             var url = Application.Current.Resources["UrlAPI"].ToString();
-            var response = await this.apiService.GetList<Mesa>(url,"/app","/listarmesas"); //acá lista de mesa
+            var response = await this.apiService.GetList<Mesa>(url, "/app","/listarmesas"); //acá lista de mesa
             if (!response.IsSuccess)
             {
                 this.IsRefreshing = false;
