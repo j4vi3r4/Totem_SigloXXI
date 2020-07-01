@@ -38,8 +38,7 @@
             return new Response
             {
                 IsSuccess = true,
-            };
-        
+            };        
         }
 
 
@@ -89,7 +88,7 @@
             try
             {
                 var request = JsonConvert.SerializeObject(model);
-                var content = new StringContent(request, Encoding.UTF8, "application/json");
+                var content = new StringContent(request, Encoding.UTF8, "application/json"); //text/plain
                 var client = new HttpClient();                
                 client.BaseAddress = new Uri(urlBase);                
                 var url = $"{prefix}{controller}";                  
@@ -120,8 +119,5 @@
                 };
             }
         } 
-
-
-
     }
 }

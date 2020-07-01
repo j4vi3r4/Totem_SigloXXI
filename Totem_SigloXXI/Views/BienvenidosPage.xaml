@@ -26,12 +26,12 @@
                 <BoxView Grid.Row="1" BackgroundColor="ForestGreen"/>
                 <!--fin header-->
                 <BoxView Grid.Row="2" BackgroundColor="White"/>
-                <Image Source="bienvenidos2.png" Grid.Row="2" Margin="25"/>
+                <Image Source="bienvenidos3.png" Grid.Row="2" Margin="25"/>
 
                 <BoxView Grid.Row="3" BackgroundColor="White"/>
                 <Label Grid.Row="3" Text="Ingrese Número de Personas"
                    HorizontalOptions="CenterAndExpand" FontSize="23"
-                   VerticalOptions="Center" TextColor="Black"/>
+                   VerticalOptions="Center" TextColor="Black" FontFamily="bebasNeue" />
                 <StackLayout Grid.Row="4" HorizontalOptions="Center">
                     <Frame HasShadow="True" HeightRequest="65" BackgroundColor="White">
                         <Entry WidthRequest="250" Placeholder="Ingrese Número Aquí" FontAttributes="Italic" HorizontalOptions="Center"
@@ -46,7 +46,7 @@
                     VerticalOptions="CenterAndExpand" Text="Solicitar Mesa"
                     WidthRequest="155" HeightRequest="80" TextColor="Black"
                      CornerRadius="13" BorderColor="ForestGreen" BorderWidth="9"
-                    BackgroundColor="White" Command="{Binding SolicitarMesaCommand}" IsEnabled="{Binding IsEnabled}"/>
+                    BackgroundColor="White" Command="{Binding SolicitarMesaCommand}" FontFamily="bebasNeue" IsEnabled="{Binding IsEnabled}"/>
 
 
                 <BoxView Grid.Row="6" BackgroundColor="White" />

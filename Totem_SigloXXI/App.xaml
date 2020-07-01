@@ -14,6 +14,12 @@
             <infra:InstanceLocator x:Key="Locator"/>
             <!--Parametros-->
             <x:String x:Key="UrlAPI">http://51.143.4.69:4567</x:String>
+            <x:String x:Key="Prefix">/app</x:String>
+            <!--Fuentes
+            <OnPlatform x:Key="BebasNeue.ttf" x:TypeArguments="x:String">
+                <On Platform="Android" Value="bebasNeue.ttf#bebasNeue"/>
+            </OnPlatform>-->
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

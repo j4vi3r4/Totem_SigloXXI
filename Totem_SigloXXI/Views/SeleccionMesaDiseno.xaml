@@ -10,40 +10,48 @@
     <ContentPage.Content>
         <StackLayout
             BindingContext="{Binding Mesas}" Padding="5">
+
+            <Image Source="LOGORESTAURATSINFONDO.png" Grid.ColumnSpan="3" HeightRequest="80" BackgroundColor="White"/>
             <ListView
                 HasUnevenRows="True"                
                 IsRefreshing="{Binding IsRefreshing}"
                 IsPullToRefreshEnabled="True"
                 ItemsSource="{Binding Mesas}"
-                RefreshCommand="{Binding RefreshCommand}">
+                RefreshCommand="{Binding RefreshCommand}">                
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid>
+                            <Grid BackgroundColor="White" >
+                                <Grid.RowDefinitions>                                    
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>                                   
+                                </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Label Text="Disponibiliad" Grid.Column="0" Grid.Row="0"></Label>
-                                <Label FontAttributes="Bold"  Grid.Column="0" Grid.Row="1"
-                                       Text="{Binding Disponibilidad}">                                    
-                                </Label>
-                                <Label Text="Numero Mesa" Grid.Column="1" Grid.Row="1"></Label>                                
-                                <Label
-                                    FontAttributes="Bold" Grid.Column="1" Text="{Binding Numero}">                                    
-                                </Label>
-                                <Label Text="Capacidad" Grid.Column="2" Grid.Row="2"></Label>
-                                <Label 
-                                    FontAttributes="Bold" Grid.Column="2" Text="{Binding Capacidad}">                                    
-                                </Label>
+
+                                
+                                <BoxView Grid.Row="0" BackgroundColor="ForestGreen" Grid.ColumnSpan="3"/>
+                                <BoxView Grid.Row="1" BackgroundColor="White" CornerRadius="2"/>
+                                <Label Text="Numero de Mesa" FontAttributes="Bold" FontSize="Medium" FontFamily="bebasNeue" Grid.Column="0" Grid.Row="1" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                <Label FontAttributes="Bold"  FontSize="Medium" FontFamily="bebasNeue" Grid.Column="1" Grid.Row="1" Text="{Binding Numero}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="Capacidad" FontAttributes="Bold" FontSize="Medium" FontFamily="bebasNeue" Grid.Column="0" Grid.Row="2" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                <Label FontAttributes="Bold" FontSize="Medium" FontFamily="bebasNeue" Grid.Column="1" Grid.Row="2" Text="{Binding Capacidad}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="Disponibilidad" FontAttributes="Bold" FontSize="Medium" FontFamily="bebasNeue" Grid.Column="0" Grid.Row="3" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                <Label FontAttributes="Bold" FontSize="Medium" FontFamily="bebasNeue" Grid.Column="1" Grid.Row="3" Text="{Binding Disponibilidad}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                <ActivityIndicator 
+                                    IsRunning="{Binding IsRunning}"
+                                    VerticalOptions="CenterAndExpand">                                    
+                                </ActivityIndicator>
+                                <Button Grid.Row="2" Grid.Column="2" Text="Asignar Mesa" FontFamily="bebasNeue" HorizontalOptions="CenterAndExpand"
+                                    VerticalOptions="CenterAndExpand" 
+                                    WidthRequest="150" HeightRequest="80" TextColor="Black" FontAttributes="Bold" FontSize="Medium"
+                                    CornerRadius="13" BorderColor="ForestGreen" BorderWidth="5"
+                                    BackgroundColor="White" Command="{Binding AsignarMesaCommand}" IsEnabled="{Binding IsEnabled}"/>                                
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

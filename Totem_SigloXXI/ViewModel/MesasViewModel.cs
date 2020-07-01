@@ -1,20 +1,27 @@
-﻿using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using System.Windows.Input;
-using Totem_SigloXXI.Services;
-using Xamarin.Forms;
-
-namespace Totem_SigloXXI.ViewModel
+﻿namespace Totem_SigloXXI.ViewModel
 {
+    using GalaSoft.MvvmLight.Command;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Text;
+    using System.Windows.Input;
+    using Totem_SigloXXI.Modelo;
+    using Totem_SigloXXI.Services;
+    using Xamarin.Forms;
     public class MesasViewModel : BaseViewModel
     {
+        #region Attributes
+        
         private ApiService apiService;
-        private bool isRefreshing;
+        private bool isRefreshing;//para refrescar lista
+        private bool isRunnning;//si esta corriendo
         private ObservableCollection<Mesa> mesas; //mesas en minusc private - atributo privado 
+        
+        #endregion
 
+        #region Properties
+        
         public ObservableCollection<Mesa> Mesas //mesas mayus public - propiedad publica
         {
             get { return this.mesas;  } // devuelve el atributo privado de mesas 
@@ -27,10 +34,31 @@ namespace Totem_SigloXXI.ViewModel
             set { this.SetValue(ref this.isRefreshing, value); } 
         }
 
+       
+        public bool IsRunnning
+        {
+            get { return this.isRunnning; }
+            set { this.SetValue(ref this.isRunnning, value); }
+        }
+        #endregion
+
+        #region Constructors
+
         public MesasViewModel()
         {
             this.apiService = new ApiService();
             this.LoadMesas();
+                     
+        }
+        #endregion
+
+        #region  Commands
+        public ICommand RefreshCommand
+        {
+            get
+            {
+                return new RelayCommand(LoadMesas);
+            }
         }
 
         private async void LoadMesas()
@@ -44,7 +72,9 @@ namespace Totem_SigloXXI.ViewModel
                 return;
             }
             var url = Application.Current.Resources["UrlAPI"].ToString();
-            var response = await this.apiService.GetList<Mesa>(url, "/app","/listarmesas"); //acá lista de mesa
+            var prefix = Application.Current.Resources["Prefix"].ToString();
+            var response = await this.apiService.GetList<Mesa>(url, prefix,"/listarmesas"); //acá lista de mesa
+            
             if (!response.IsSuccess)
             {
                 this.IsRefreshing = false;
@@ -57,14 +87,10 @@ namespace Totem_SigloXXI.ViewModel
             this.IsRefreshing = false; //para que no de vueltas el circulo de refresh 
         }
 
-        public ICommand RefreshCommand
-        {
-            get
-            {
-                return new RelayCommand(LoadMesas);
-            }
+        //refrezca lista en la view
+        
+        //captura el comand de la view /button
+        
         }
-
-
-    }
+        #endregion
 }

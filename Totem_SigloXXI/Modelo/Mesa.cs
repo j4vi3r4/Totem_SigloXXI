@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Totem_SigloXXI
+﻿namespace Totem_SigloXXI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
     public class Mesa
     {        
         //Clase con atributos 
