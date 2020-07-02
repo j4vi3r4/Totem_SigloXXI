@@ -83,5 +83,51 @@ namespace Totem_SigloXXI.Services
                 };
             }
         }
+
+        public async Task<Response> PostUpdate<T>(string jsonObject, string urlBase, string prefix, string controller) {
+            try
+            {
+                // Crea un objeto que maneje la conexión HTTP
+                HttpClient socket = new HttpClient();
+
+                //Parsea la url en solo un string
+                string url = $"{urlBase}{prefix}{controller}";
+
+                //Convierte el json en el body
+                var content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
+
+                //Ejecuta la conexión a la API como POST
+                var response = await socket.PostAsync(url, content);
+
+                //Parsea la respuesta como string
+                string answer = await response.Content.ReadAsStringAsync();
+
+                //Devuelve error desde la API
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new Response
+                    {
+                        IsSuccess = false,
+                        Message = answer,
+                    };
+                }
+
+                //el json se convierte en una lista de objetos
+                var list = JsonConvert.DeserializeObject<List<T>>(answer);
+                return new Response
+                {
+                    IsSuccess = true,
+                    Result = list,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
