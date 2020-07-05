@@ -1,8 +1,5 @@
 ﻿namespace Totem_SigloXXI.ViewModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     //CLASE DONDE TODOS VIENEN 
     public class MainViewModel

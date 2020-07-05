@@ -13,7 +13,7 @@
             esta dentro de infraestructure, infraestructure encuentra el objeto main, esto se hace para poder conectar las viewmodels con las views -->
             <infra:InstanceLocator x:Key="Locator"/>
             <!--Parametros-->
-            <x:String x:Key="UrlAPI">http://51.143.4.69:4567</x:String>
+            <x:String x:Key="UrlAPI">http://10.0.2.2:4567</x:String><!--51.143.4.69:4567-->
             <x:String x:Key="Prefix">/app</x:String>
             <!--Fuentes
             <OnPlatform x:Key="BebasNeue.ttf" x:TypeArguments="x:String">

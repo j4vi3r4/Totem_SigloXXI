@@ -7,7 +7,7 @@
     {        
         //Clase con atributos 
       
-        public int IdMesa { get; set; }                
+        public int Id_mesa { get; set; }                
         public int Numero { get; set; }        
         public int Capacidad { get; set; }
         public string Disponibilidad { get; set; }

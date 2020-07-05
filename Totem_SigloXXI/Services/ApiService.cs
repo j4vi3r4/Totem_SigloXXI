@@ -8,7 +8,6 @@
     using System.Text;
     using System.Threading.Tasks;
     using Totem_SigloXXI.Modelo;
-    using Xamarin.Forms;
 
     public class ApiService
     {
