@@ -4,6 +4,7 @@
     using Plugin.Connectivity;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
@@ -86,13 +87,23 @@
         {
             try
             {
-                var request = JsonConvert.SerializeObject(model);
-                var content = new StringContent(request, Encoding.UTF8, "application/json"); //text/plain
-                var client = new HttpClient();                
-                client.BaseAddress = new Uri(urlBase);                
-                var url = $"{prefix}{controller}";                  
-                var response = await client.PostAsync(url, content); // envia url y el contenido de la data
-                var answer = await response.Content.ReadAsStringAsync();
+                // Crea un objeto que maneje la conexión HTTP
+                HttpClient socket = new HttpClient();
+
+                //Parsea la url en solo un string
+                string url = $"{urlBase}{prefix}{controller}";
+
+                //Convierte el json en el body
+                var content = new StringContent(model.ToString(), Encoding.UTF8, "application/json");
+
+                //Ejecuta la conexión a la API como POST
+                var response = await socket.PostAsync(url, content);
+                //Debug.WriteLine("----> POST response: " + response.ToString());
+
+                //Parsea la respuesta como string
+                string answer = await response.Content.ReadAsStringAsync();
+                //Debug.WriteLine("----> POST awser: " + answer);
+
                 if (!response.IsSuccessStatusCode) 
                 {
                     return new Response
@@ -101,16 +112,33 @@
                         Message = answer,
                     };
                 }
-                
-                var obj = JsonConvert.DeserializeObject<T>(answer);
+
+                // Crea una definición para hacer el parseo a .NET
+                // Tiene la misma estructura que el resultado de la API
+                // Como puede variar el resultado según el post que se aplique, 
+                // este var se puede pasar como param para así hacer este método
+                // multifuncional
+                var definition = new { status = "" };
+
+                // Convierte el resultado en el formato dado anteriormente a un objeto
+                var resultado = JsonConvert.DeserializeAnonymousType(answer, definition);
+
+                // Muestra de que se parseó correctamente a objeto
+                Debug.WriteLine("----> Status: " + resultado.status);
+
+
+                //var obj = JsonConvert.DeserializeObject(answer);
                 return new Response
                 {
                     IsSuccess = true,
-                    Result = obj,
+                    // En caso de que se mande la definition como param, se deberá obtener 
+                    // un Diccionario, por que no se puede pasar el objeto solo
+                    Result = resultado.status,
                 };
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex);
                 return new Response
                 {
                     IsSuccess = false,  

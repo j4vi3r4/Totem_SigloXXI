@@ -58,7 +58,7 @@
             AsignarMesaCommand = new Command<string>(
                 execute: (string arg) =>
                 {
-                    Debug.WriteLine("------> Command " + arg);
+                    //Debug.WriteLine("------> Command " + arg);
                     ChangeMesaDisponibility(arg);
                     RefreshCanExecutes();
                 }
@@ -123,11 +123,40 @@
             this.IsRefreshing = false; //para que no de vueltas el circulo de refresh 
         }
 
-        private void ChangeMesaDisponibility(string id_mesa)
+        private async void ChangeMesaDisponibility(string id_mesa)
         {
-            this.IsRefreshing = false;
-            var connection = this.apiService.CheckConnection(); // validación de conexión a internet 
-            Debug.WriteLine("------> ID_MESA {0}", id_mesa);
+            var connection = await this.apiService.CheckConnection(); // validación de conexión a internet 
+            //Debug.WriteLine("------> ID_MESA {0}", id_mesa);
+            if (!connection.IsSuccess)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", connection.Message, "Accept");
+                return;
+            }
+
+            // Aquí pasamos truchamente el JSON como string
+            // No me da el tiempo para poder hacer un método bonito :c
+            string json = "{\"id_mesa\": \"" + id_mesa + "\"}";
+
+            string url = Application.Current.Resources["UrlAPI"].ToString();
+            string prefix = Application.Current.Resources["Prefix"].ToString();
+            var response = await this.apiService.Post(url, prefix, "/cambiarDisponibilidadMesa", json); //acá lista de mesa
+
+            if (!response.IsSuccess)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", response.Message, "Accept");
+                return;
+            }
+
+            if (response.Result.ToString().Equals("0")) {
+                await Application.Current.MainPage.DisplayAlert("Error", "Error al asignar mesa", "Accept");
+                return;
+            }
+
+            LoadMesas();
+
+            await Application.Current.MainPage.DisplayAlert("OK", "Mesa asignada correctamente", "Accept");
+            return;
+
         }
 
         //refrezca lista en la view
