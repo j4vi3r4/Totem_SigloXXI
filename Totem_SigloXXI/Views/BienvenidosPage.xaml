@@ -8,7 +8,7 @@
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="Siglo XXI">
     <ContentPage.Content>
-        <AbsoluteLayout BackgroundColor="White" BindingContext="{Binding Comensales}">
+        <AbsoluteLayout BackgroundColor="White" BindingContext="{Binding Mesas}">
             <Grid RowSpacing="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
