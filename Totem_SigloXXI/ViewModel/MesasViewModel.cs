@@ -5,10 +5,13 @@
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Diagnostics;
+    using System.Linq;
     using System.Windows.Input;
     using Totem_SigloXXI.Services;
     using Totem_SigloXXI.Views;
     using Xamarin.Forms;
+    using Xamarin.Forms.Xaml;
+
     public class MesasViewModel : BaseViewModel, INotifyPropertyChanged
     {
         #region Attributes
@@ -110,31 +113,7 @@
         /// <summary>
         /// Refresca la lista de mesas
         /// </summary>
-        private async void LoadMesas()
-        {
-            this.IsRefreshing = true;
-            var connection = await this.apiService.CheckConnection(); // validación de conexión a internet 
-            if (!connection.IsSuccess)
-            {
-                this.IsRefreshing = false;
-                await Application.Current.MainPage.DisplayAlert("Error", connection.Message, "Accept");
-                return;
-            }
-            var url = Application.Current.Resources["UrlAPI"].ToString();
-            var prefix = Application.Current.Resources["Prefix"].ToString();
-            var response = await this.apiService.GetList<Mesa>(url, prefix,"/listarmesas"); //acá lista de mesa
-            
-            if (!response.IsSuccess)
-            {
-                this.IsRefreshing = false;
-                await Application.Current.MainPage.DisplayAlert("Error", response.Message,"Accept");
-                return;
-            }
-
-            var list = (List<Mesa>)response.Result;
-            this.Mesas = new ObservableCollection<Mesa>(list);
-            this.IsRefreshing = false; //para que no de vueltas el circulo de refresh 
-        }
+        
 
         /// <summary>
         /// Cambia la disponibilidad de la mesa a "No disponible"
@@ -160,23 +139,22 @@
 
             if (!response.IsSuccess)
             {
-                await Application.Current.MainPage.DisplayAlert("Error", response.Message, "Accept");
+                await Application.Current.MainPage.DisplayAlert("Error", response.Message, "Aceptar");
                 return;
             }
 
             if (response.Result.ToString().Equals("0")) {
-                await Application.Current.MainPage.DisplayAlert("Error", "Error al asignar mesa", "Accept");
+                await Application.Current.MainPage.DisplayAlert("Error", "Error al asignar mesa", "Aceptar");
                 return;
             }
 
             GenerateComensal(id_mesa);
 
-            await Application.Current.MainPage.DisplayAlert("OK", "Mesa asignada correctamente", "Accept");
+            await Application.Current.MainPage.DisplayAlert("Siglo XXI", "Mesa asignada correctamente", "Aceptar");
 
             // Lleva a la página de inicio
             await Application.Current.MainPage.Navigation.PushAsync(new BienvenidosPage());
             return;
-
         }
 
         /// <summary>
@@ -191,18 +169,27 @@
                     await Application.Current.MainPage.DisplayAlert("Error", "Debe ingresar cantidad de personas", "Aceptar");
                     return;
                 }
-
                 var cantidad = int.Parse(this.TxtCantComensal);
-                if (cantidad <= 0)
+                if (cantidad <= 0 )
                 {
                     await Application.Current.MainPage.DisplayAlert("Error", "Debe ser superior a 0", "Aceptar");
                     return;
                 }
-                else if (cantidad >= 1)
+                else if (cantidad > 15)
                 {
-                    //prueba que se envia a la otra page (IDEA: CAPTURAR DATOS DEL ENTRY - > CAPTURAR LA DISPONIBILIDAD Y LA CANTIDAD DE LA MESA )
-                    await Application.Current.MainPage.Navigation.PushAsync(new SeleccionMesaDiseno());
+                    await Application.Current.MainPage.DisplayAlert("Lo Sentimos", "El restaurante tiene capacidad máxima de 15 personas", "Aceptar");
+                    return;
                 }
+                else if(cantidad > 6 ) //12
+                {
+                    await Application.Current.MainPage.DisplayAlert("Siglo XXI", "El restaurante tiene capacidad hasta 6 personas por mesa en caso de ser más diríjase a caja", "Aceptar");
+                    return;
+                }                
+                else if (cantidad >= 1 && cantidad <=6)
+                {                   
+                  //  Debug.WriteLine("----->" + cantidad);
+                    await Application.Current.MainPage.Navigation.PushAsync(new SeleccionMesaDiseno());
+                } 
             }
             catch (Exception ex)
             {
@@ -210,7 +197,46 @@
                 await Application.Current.MainPage.DisplayAlert("Error", "Debe ser un número", "Aceptar");
                 return;
             }
+        }
 
+        private async void LoadMesas()
+        {
+            this.IsRefreshing = true;
+            var connection = await this.apiService.CheckConnection(); // validación de conexión a internet 
+            if (!connection.IsSuccess)
+            {
+                this.IsRefreshing = false;
+                await Application.Current.MainPage.DisplayAlert("Error", connection.Message, "Accept");
+                return;
+            }
+            var url = Application.Current.Resources["UrlAPI"].ToString();
+            var prefix = Application.Current.Resources["Prefix"].ToString();
+            var response = await this.apiService.GetList<Mesa>(url, prefix, "/listarmesas"); //acá lista de mesa
+
+            if (!response.IsSuccess)
+            {
+                this.IsRefreshing = false;
+                await Application.Current.MainPage.DisplayAlert("Error", response.Message, "Accept");
+                return;
+            }
+
+            var list = (List<Mesa>)response.Result;
+
+            //var cantidad2 = new
+            Mesas = new ObservableCollection<Mesa>();
+            //var cantidad = int.Parse(this.TxtCantComensal);                         
+            //var cantidad = TxtCantComensal.ToString();
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i].Disponibilidad  == "Disponible" )
+                    {
+                    //&& TxtCantComensal.ToString() == "2" //  SolicitarMesaCommand.CanExecute(TxtCantComensal)  == "2"
+                    Mesas.Add(list[i]);
+                    Debug.WriteLine("----->" + TxtCantComensal);
+                    this.IsRefreshing = false;
+                    }
+                 
+             }
         }
 
         private async void GenerateComensal(string id_mesa) {
@@ -218,7 +244,7 @@
             
             if (!connection.IsSuccess)
             {
-                await Application.Current.MainPage.DisplayAlert("Error", connection.Message, "Accept");
+                await Application.Current.MainPage.DisplayAlert("Error", connection.Message, "Acceptar");
                 return;
             }
 
@@ -237,7 +263,7 @@
 
             if (!response.IsSuccess)
             {
-                await Application.Current.MainPage.DisplayAlert("Error", response.Message, "Accept");
+                await Application.Current.MainPage.DisplayAlert("Error", response.Message, "Acceptar");
                 return;
             }
 

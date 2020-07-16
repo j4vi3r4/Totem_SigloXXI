@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Totem_SigloXXI.Modelo
+﻿namespace Totem_SigloXXI.Modelo
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
     public class Comensal
     {/*{
    "cantidadPersonas": "2",

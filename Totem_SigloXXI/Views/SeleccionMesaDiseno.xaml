@@ -19,9 +19,10 @@
                 ItemsSource="{Binding Mesas}"
                 RefreshCommand="{Binding RefreshCommand}"
                 x:Name="MesaSeleccion">                
-                <ListView.ItemTemplate>
-                    <DataTemplate>
+                <ListView.ItemTemplate>                    
+                    <DataTemplate>                        
                         <ViewCell>
+                            <Frame BorderColor="ForestGreen" CornerRadius="20" HasShadow="True" Margin="10" HeightRequest="150" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
                             <Grid BackgroundColor="White" >
                                 <Grid.RowDefinitions>                                    
                                     <RowDefinition Height="5"/>
@@ -42,14 +43,14 @@
                                 <Label Text="Numero de Mesa" FontAttributes="Bold" FontSize="Medium" FontFamily="bebasNeue" Grid.Column="0" Grid.Row="1" 
                                        HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                                 <Label FontAttributes="Bold"  FontSize="Medium" FontFamily="bebasNeue" Grid.Column="1" Grid.Row="1" Text="{Binding Numero}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                                <Label Text="Capacidad" FontAttributes="Bold" FontSize="Medium" FontFamily="bebasNeue" Grid.Column="0" Grid.Row="2" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                                <Label FontAttributes="Bold" FontSize="Medium" FontFamily="bebasNeue" Grid.Column="1" Grid.Row="2" Text="{Binding Capacidad}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="Capacidad" TextColor="ForestGreen" FontAttributes="Bold" FontSize="Medium" FontFamily="bebasNeue" Grid.Column="0" Grid.Row="2" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                <Label FontAttributes="Bold" TextColor="ForestGreen" FontSize="Medium" FontFamily="bebasNeue" Grid.Column="1" Grid.Row="2" Text="{Binding Capacidad}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                                 <Label Text="Disponibilidad" FontAttributes="Bold" FontSize="Medium" FontFamily="bebasNeue" Grid.Column="0" Grid.Row="3" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                                 <Label FontAttributes="Bold" FontSize="Medium" FontFamily="bebasNeue" Grid.Column="1" Grid.Row="3" Text="{Binding Disponibilidad}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
 
-                                <Button Grid.Row="2" Grid.Column="2" Text="Asignar Mesa" FontFamily="bebasNeue" HorizontalOptions="CenterAndExpand"
+                                <Button Grid.Row="2" Grid.Column="2" Text="Asignar" FontFamily="bebasNeue" HorizontalOptions="CenterAndExpand"
                                     VerticalOptions="CenterAndExpand" 
-                                    WidthRequest="150" HeightRequest="80" TextColor="Black" FontAttributes="Bold" FontSize="Medium"
+                                    WidthRequest="100" HeightRequest="50" TextColor="Black" FontAttributes="Bold" FontSize="Medium"
                                     CornerRadius="13" BorderColor="ForestGreen" BorderWidth="5"
                                     BackgroundColor="White" 
                                         Command="{Binding Source={x:Reference MesaSeleccion}, Path=BindingContext.AsignarMesaCommand}"
@@ -59,6 +60,7 @@
                                 un binding normal, este no entra por no se que razóm. Aparte de que si paso el parámetro al igual que el Command, estre entra null porque 
                                 ¿crea? un nuevo objeto que no tiene la lista de las mesas-->
                             </Grid>
+                            </Frame>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
